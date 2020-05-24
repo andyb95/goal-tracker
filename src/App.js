@@ -1,4 +1,10 @@
 import React, {Component} from 'react';
+import Header from './Components/Header'
+import GoalChart from './Components/GoalChart'
+import MasterChart from './Components/MasterChart'
+import UserGoals from './Components/UserGoals'
+import UserInput from './Components/UserInput'
+import axios from 'axios'
 import './App.css';
 
 class App extends Component {
@@ -13,12 +19,12 @@ class App extends Component {
     this.deleteGoal = this.deleteGoal.bind(this)
   }
 
-  componentDidMount(){
-
-  }
-
   addNewGoal() {
-    this.setState({goals: [...this.state.goals, this.props.newGoal]})
+    const postData = { name: 'andy', timeline: 'now' }
+    
+    axios.post('/api/goals', postData).then(res => {
+      this.setState({goals: [...this.state.goals, res.body]})
+    })
   }
 
   updateGoal(){
@@ -32,10 +38,9 @@ class App extends Component {
   render(){
     return (
       <div className="App">
-        {/* <Header />
+        <Header />
         <MasterChart />
         <GoalChart />
-        <NewGoal /> */}
       </div>
     );
   }
