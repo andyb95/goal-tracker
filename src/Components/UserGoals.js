@@ -1,21 +1,22 @@
-// import React, {Component} from 'react'
-// import GoalChart from './GoalChart'
+import React, {Component} from 'react'
+import GoalChart from './GoalChart'
 
-// function UserGoals(props){
-//   const goalMap = props.goals.map(e => (
-//     <GoalChart
-//       key={e.id}
-//       updateGoal={props.updateGoal}
-//       deleteGoal={props.deleteGoal}
-//     />
-//   ))
+function UserGoals(props){
+  const goalMap = props.goals.map(e => (
+    <GoalChart
+      key={e.id}
+      accomplished={props.accomplished}
+      deleteGoal={props.deleteGoal}
+      data ={e}
+    />
+  ))
 
-//   return (
-//     <div>
-//       <h2>Pokedex</h2>
-//       <div>{goalMap}</div>
-//     </div>
-//   )
-// }
+  return (
+    <div>
+      <h2>Goals</h2>
+      <div>{goalMap}</div>
+    </div>
+  )
+}
 
-// export default UserGoals
+export default UserGoals

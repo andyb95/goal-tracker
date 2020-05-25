@@ -1,11 +1,12 @@
-// import React from 'react'
+import React from 'react'
 
-// function Header(props) {
-//   return (
-//     <header>
-//       <h1>Goal Mate</h1>
-//     </header>
-//   )
-// }
+function Header(props) {
 
-// export default Header
+  return (
+    <div>
+      <h1>Your Progress</h1>
+    </div>
+  )
+}
+
+export default Header

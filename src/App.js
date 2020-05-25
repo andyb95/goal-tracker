@@ -3,7 +3,7 @@ import Header from './Components/Header'
 import GoalChart from './Components/GoalChart'
 import MasterChart from './Components/MasterChart'
 import UserGoals from './Components/UserGoals'
-import UserInput from './Components/UserInput'
+import NewGoal from './Components/NewGoal'
 import axios from 'axios'
 import './App.css';
 
@@ -14,33 +14,48 @@ class App extends Component {
     this.state={
       goals: []
     }
-    this.addNewGoal = this.addNewGoal.bind(this)
-    this.updateGoal = this.updateGoal.bind(this)
+    this.getNewGoals = this.getNewGoals.bind(this)
+    this.accomplished = this.accomplished.bind(this)
     this.deleteGoal = this.deleteGoal.bind(this)
   }
 
-  addNewGoal() {
-    const postData = { name: 'andy', timeline: 'now' }
+  componentDidMount() {
+    document.title = 'Goal Mate'
+  }
+
+  getNewGoals(name, timeline){
+    const body = {name, timeline}
+    axios.post('/api/goals', body).then((res)=> {
+      this.setState({goals: res.data})
+    })
     
-    axios.post('/api/goals', postData).then(res => {
-      this.setState({goals: [...this.state.goals, res.body]})
+  }
+
+  accomplished(id, bool){
+    const body = {bool}
+
+    axios.put(`/api/goals/${id}`, body).then((res) => {
+      this.setState({goals: res.data})
     })
   }
 
-  updateGoal(){
-
-  }
-
-  deleteGoal(){
-
+  deleteGoal(id){
+    axios.delete(`/api/pokemon/${id}`).then((res) => {
+      this.setState({goals: res.data})
+    })
   }
 
   render(){
     return (
       <div className="App">
         <Header />
-        <MasterChart />
-        <GoalChart />
+        <NewGoal 
+          getNewGoals={this.getNewGoals} />
+        <UserGoals 
+          goals={this.state.goals}
+          accomplished={this.accomplished}
+          deleteGoal={this.deleteGoal}
+        />
       </div>
     );
   }

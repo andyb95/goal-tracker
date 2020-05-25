@@ -8,6 +8,7 @@ module.exports = {
   },
 
   createGoal: (req, res) => {
+    console.log('checkpoint')
     const { name, timeline } = req.body
     const didComplete = []
     const newGoal = {id, name, timeline, didComplete }
@@ -23,6 +24,7 @@ module.exports = {
   //Fix This
   updateGoal: (req, res) => {
     const { goal_id } = req.params
+    const {accomplished} =req.body
 
     const index = goals.findIndex((element) => element.id === +goal_id)
 
@@ -30,8 +32,7 @@ module.exports = {
       return res.status(404).send('Goal not found')
     }
 
-    const { checkDate } =  req.body
-    goals[index].didComplete.push(checkDate)
+    goals[index].didComplete.push(accomplished)
 
     res.status(200).send(goals[index].didComplete)
   },
