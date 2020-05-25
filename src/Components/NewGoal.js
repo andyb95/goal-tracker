@@ -33,7 +33,7 @@ export default class NewGoal extends Component{
 
   render(){
     return(
-      <div>
+      <div class="New-Goal">
         <h1>NewGoal</h1>
 
         <input placeholder= "describe goal here" onChange= {e => this.handleChangeName(e.target.value)}/>

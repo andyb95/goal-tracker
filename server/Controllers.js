@@ -1,6 +1,7 @@
 let goals = []
 let id = 1
 
+
 module.exports = {
 
   getGoals: (req, res) => {
@@ -8,10 +9,10 @@ module.exports = {
   },
 
   createGoal: (req, res) => {
-    console.log('checkpoint')
     const { name, timeline } = req.body
     const didComplete = []
-    const newGoal = {id, name, timeline, didComplete }
+    const avg = 0
+    const newGoal = {id, name, timeline, didComplete, avg }
 
     goals.push(newGoal)
 
@@ -23,32 +24,40 @@ module.exports = {
 
   //Fix This
   updateGoal: (req, res) => {
-    const { goal_id } = req.params
-    const {accomplished} =req.body
+    const { goals_id } = req.params
+    const {num} =req.body
 
-    const index = goals.findIndex((element) => element.id === +goal_id)
+
+    const index = goals.findIndex((element) => element.id === +goals_id)
 
     if (index === -1) {
-      return res.status(404).send('Goal not found')
+      res.status(404).send('Goal not found')
+    } else {
+      goals[index].didComplete.push(num)
+
+      goals[index].avg = goals[index].didComplete.reduce((a,b) => a+b, 0) / goals[index].didComplete.length
+
+      goals[index].avg = Math.round(goals[index].avg*100)
+
+      res.status(200).send(goals)
     }
 
-    goals[index].didComplete.push(accomplished)
-
-    res.status(200).send(goals[index].didComplete)
+    
   },
 
   deleteGoal: (req, res) => {
-    const { goal_id } = req.params
+    const { goals_id } = req.params
 
-    const index = goal.findIndex((element) => element.id === +goal_id)
+    const index = goals.findIndex((element) => element.id === +goals_id)
 
     if (index === -1) {
-      return res.status(404).send('Goal not found')
+      res.status(404).send('Goal not found')
+    }else{
+      goals.splice(index, 1)
+  
+      res.status(200).send(goals)
     }
 
-    goal.splice(index, 1)
-
-    res.status(200).send(goal)
   }
 
 }

@@ -27,20 +27,24 @@ class App extends Component {
     const body = {name, timeline}
     axios.post('/api/goals', body).then((res)=> {
       this.setState({goals: res.data})
+      
     })
     
   }
 
-  accomplished(id, bool){
-    const body = {bool}
+  accomplished(id, num){
+    const body = {num}
+    console.log("!", id, num)
 
-    axios.put(`/api/goals/${id}`, body).then((res) => {
+    axios.put(`/api/edit/${id}`, body).then((res) => {
       this.setState({goals: res.data})
+      
     })
+    .catch(err => console.log(err))
   }
 
   deleteGoal(id){
-    axios.delete(`/api/pokemon/${id}`).then((res) => {
+    axios.delete(`/api/goals/${id}`).then((res) => {
       this.setState({goals: res.data})
     })
   }
@@ -49,13 +53,17 @@ class App extends Component {
     return (
       <div className="App">
         <Header />
-        <NewGoal 
-          getNewGoals={this.getNewGoals} />
-        <UserGoals 
-          goals={this.state.goals}
-          accomplished={this.accomplished}
-          deleteGoal={this.deleteGoal}
-        />
+        <div class = "User-Goals">
+          <UserGoals 
+            goals={this.state.goals}
+            accomplished={this.accomplished}
+            deleteGoal={this.deleteGoal}
+          />
+        </div>
+        <div class = "new-goal">
+          <NewGoal 
+            getNewGoals={this.getNewGoals} />
+        </div>
       </div>
     );
   }
